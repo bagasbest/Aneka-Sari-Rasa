@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Aneka Sari Rasa</string>
+    <string name="title_activity_homepage">Homepage</string>
+
+    <string-array name="category">
+        <item>Semua</item>
+        <item>Abon</item>
+        <item>Dodol</item>
+        <item>Gula</item>
+        <item>Kacang</item>
+        <item>Keripik</item>
+        <item>Kerupuk dan Kemplang</item>
+        <item>Kopi</item>
+        <item>Kue</item>
+        <item>Lempok</item>
+        <item>Madu</item>
+        <item>Manisan</item>
+        <item>Madu</item>
+        <item>Minuman bubuk instan</item>
+        <item>Minuman sari buah</item>
+        <item>Pisang sale</item>
+        <item>Sambal</item>
+        <item>Snack</item>
+    </string-array>
+
+
+    <string-array name="filter_payment_status">
+        <item>Belum Bayar</item>
+        <item>Sudah Bayar</item>
+        <item>Pembayaran Ditolak</item>
+        <item>Order Dikirim</item>
+    </string-array>
+
+
+    <string-array name="payment_method">
+        <item>Bank BCA</item>
+        <item>Bank Mandiri</item>
+        <item>Bank BNI</item>
+    </string-array>
+
+</resources>
