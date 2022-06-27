@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "91126783391",
-    "project_id": "aneka-sari-rasa",
-    "storage_bucket": "aneka-sari-rasa.appspot.com"
+    "project_number": "706296522316",
+    "project_id": "aneka-sari-rasa-e83e7",
+    "storage_bucket": "aneka-sari-rasa-e83e7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:91126783391:android:3290752f15ecfabffff1aa",
+        "mobilesdk_app_id": "1:706296522316:android:d070b9983a72318adf76e9",
         "android_client_info": {
           "package_name": "com.project.anekasari"
         }
       },
       "oauth_client": [
         {
-          "client_id": "91126783391-ojpat791i4s647dq579ia949mavl5cf8.apps.googleusercontent.com",
+          "client_id": "706296522316-td9plfrmvj0dh3c61394ofda2a1vjc8v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBGkjtWjQCuJyWo7Auereaf4yr8BWzJNPc"
+          "current_key": "AIzaSyC-7B0WDt39VvGNTuV-kumEZh17NBzFywg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "91126783391-ojpat791i4s647dq579ia949mavl5cf8.apps.googleusercontent.com",
+              "client_id": "706296522316-td9plfrmvj0dh3c61394ofda2a1vjc8v.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
