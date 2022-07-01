@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.project.anekasari.Homepage
 import com.project.anekasari.LoginActivity
 import com.project.anekasari.R
@@ -32,6 +33,7 @@ class ProductFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        getRole()
         when (filter) {
             null -> {
                 initRecyclerView()
@@ -46,6 +48,21 @@ class ProductFragment : Fragment() {
                 initViewModel(category!!, "all")
             }
         }
+    }
+
+    private fun getRole() {
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        FirebaseFirestore
+            .getInstance()
+            .collection("users")
+            .document(uid)
+            .get()
+            .addOnSuccessListener {
+                val role = "" + it.data!!["role"]
+                if(role == "merchant") {
+                    binding.addProduct.visibility = View.VISIBLE
+                }
+            }
     }
 
     private fun initRecyclerView() {

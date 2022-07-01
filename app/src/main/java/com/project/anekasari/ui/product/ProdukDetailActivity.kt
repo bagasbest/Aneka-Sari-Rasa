@@ -2,6 +2,7 @@ package com.project.anekasari.ui.product
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -168,6 +169,12 @@ class ProdukDetailActivity : AppCompatActivity() {
     }
 
     private fun deleteProduct() {
+        val mProgressDialog = ProgressDialog(this)
+        mProgressDialog.setMessage("Mohon tunggu hingga proses selesai...")
+        mProgressDialog.setCanceledOnTouchOutside(false)
+        mProgressDialog.show()
+
+
         FirebaseFirestore
             .getInstance()
             .collection("product")
@@ -175,12 +182,14 @@ class ProdukDetailActivity : AppCompatActivity() {
             .delete()
             .addOnCompleteListener {
                 if(it.isSuccessful) {
+                    mProgressDialog.dismiss()
                     Toast.makeText(this, "Sukses menghapus produk", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, Homepage::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     finish()
                 } else {
+                    mProgressDialog.dismiss()
                     Toast.makeText(this, "Ups, sepertinya koneksi internetmu bermasalah, silahkan coba beberapa saat lagi", Toast.LENGTH_SHORT).show()
                 }
             }

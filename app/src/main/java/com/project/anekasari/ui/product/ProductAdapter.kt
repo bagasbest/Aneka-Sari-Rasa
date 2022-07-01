@@ -32,7 +32,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
                     .into(image)
 
                 name.text = productModel.name
-                price.text = "Rp.${formatter.format(productModel.price)}"
+                price.text = "Rp.${formatter.format(productModel.price ?: 0)}"
                 sellerName.text = productModel.merchantName
 
                 itemCardView.setOnClickListener {
