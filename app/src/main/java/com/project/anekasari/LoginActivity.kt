@@ -25,7 +25,9 @@ class LoginActivity : AppCompatActivity() {
 
         /// jika user klik ''Registrasi'', maka akan pindah ke halaman RegisterActivity
         binding?.registerBtn?.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+            val intent = Intent(this, RegisterActivity::class.java)
+            intent.putExtra(RegisterActivity.ROLE, "user")
+            startActivity(intent)
         }
 
 

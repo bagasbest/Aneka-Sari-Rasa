@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.project.anekasari.Homepage
 import com.project.anekasari.LoginActivity
 import com.project.anekasari.R
+import com.project.anekasari.RegisterActivity
 import com.project.anekasari.databinding.FragmentProductBinding
 
 class ProductFragment : Fragment() {
@@ -59,8 +61,12 @@ class ProductFragment : Fragment() {
             .get()
             .addOnSuccessListener {
                 val role = "" + it.data!!["role"]
+                val email = "" + it.data!!["email"]
                 if(role == "merchant") {
                     binding.addProduct.visibility = View.VISIBLE
+                    if(email == "admin@gmail.com") {
+                        binding.addNewAdminBtn.visibility = View.VISIBLE
+                    }
                 }
             }
     }
@@ -122,8 +128,14 @@ class ProductFragment : Fragment() {
         binding.homepageCategory.setOnItemClickListener { _, _, _, _ ->
             filter = "category"
             category = binding.homepageCategory.text.toString()
-            initRecyclerView()
-            initViewModel(category!!, "all")
+            if(category != "Semua") {
+                initRecyclerView()
+                initViewModel(category!!, "all")
+            } else {
+                initRecyclerView()
+                initViewModel("all", "all")
+            }
+
         }
     }
 
@@ -181,6 +193,13 @@ class ProductFragment : Fragment() {
             }
 
         })
+
+
+        binding.addNewAdminBtn.setOnClickListener {
+            val intent = Intent(activity, RegisterActivity::class.java)
+            intent.putExtra(RegisterActivity.ROLE, "admin")
+            startActivity(intent)
+        }
     }
 
 

@@ -122,38 +122,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Silahkan Mendaftar Sebagai"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:layout_marginTop="16sp"
-                    android:textStyle="bold" />
-
-
-                <RadioGroup
-                    android:id="@+id/rg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/user"
-                        android:onClick="chooseRole"
-                        android:text="User Biasa" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:onClick="chooseRole"
-                        android:id="@+id/merchant"
-                        android:text="Merchant / Penjual"/>
-
-                </RadioGroup>
-
-
                 <ProgressBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

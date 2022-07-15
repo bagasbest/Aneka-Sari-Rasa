@@ -197,10 +197,19 @@ class ProdukDetailActivity : AppCompatActivity() {
 
     private fun checkRole() {
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
-        if(uid == model?.merchantId) {
-            binding?.edit?.visibility = View.VISIBLE
-            binding?.delete?.visibility = View.VISIBLE
-        }
+        FirebaseFirestore
+            .getInstance()
+            .collection("users")
+            .document(uid)
+            .get()
+            .addOnSuccessListener {
+                val role = "" + it.data!!["role"]
+                if(role == "merchant") {
+                    binding?.edit?.visibility = View.VISIBLE
+                    binding?.delete?.visibility = View.VISIBLE
+                }
+            }
+
     }
 
     override fun onDestroy() {

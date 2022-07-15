@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -17,7 +16,6 @@ class RegisterActivity : AppCompatActivity() {
     /// var itu berarti variabel tersebut dapat di ubah atau di isi dengan value lain
     /// val itu berarti variabel tidak bisa di ubah
     private var binding: ActivityRegisterBinding? = null
-    private var role = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +39,7 @@ class RegisterActivity : AppCompatActivity() {
         val password = binding?.password?.text.toString().trim()
 
         /// buat validasi
-        if(fullName.isEmpty()) {
+        if (fullName.isEmpty()) {
             Toast.makeText(this, "Nama lengkap harus diisi!", Toast.LENGTH_SHORT).show()
         } else if (username.isEmpty()) {
             Toast.makeText(this, "Username harus diisi!", Toast.LENGTH_SHORT).show()
@@ -51,9 +49,6 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this, "Password harus diisi!", Toast.LENGTH_SHORT).show()
         } else if (password.length < 6) {
             Toast.makeText(this, "Password minimal 6 karakter!", Toast.LENGTH_SHORT).show()
-        }
-        else if (role == "") {
-            Toast.makeText(this, "Anda harus memilih mendaftar sebagai ?", Toast.LENGTH_SHORT).show()
         } else {
 
             /// proses registrasi user
@@ -86,50 +81,64 @@ class RegisterActivity : AppCompatActivity() {
 
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
 
-       /// kumpulan informasi dari user yang diisikan di kolom registrasi
-        val data = mapOf(
-            "uid" to uid,
-            "fullName" to fullName,
-            "username" to username,
-            "email" to email,
-            "role" to role,
-        )
+        /// kumpulan informasi dari user yang diisikan di kolom registrasi
+        if (intent.getStringExtra(ROLE) == "user") {
+            val data = mapOf(
+                "uid" to uid,
+                "fullName" to fullName,
+                "username" to username,
+                "email" to email,
+                "role" to "user",
+            )
 
-        FirebaseFirestore
-            .getInstance()
-            .collection("users")
-            .document(uid)
-            .set(data)
-            .addOnCompleteListener {
-                if(it.isSuccessful) {
-                    /// munculkan peringatan sukses mendaftar
-                    binding?.progressBar?.visibility = View.GONE
-                    showSuccessDialog()
-                } else {
-                    /// munculkan peringatan gagal register
-                    binding?.progressBar?.visibility = View.GONE
-                    showFailureDialog("Gagal melakukan registrasi")
+            FirebaseFirestore
+                .getInstance()
+                .collection("users")
+                .document(uid)
+                .set(data)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        /// munculkan peringatan sukses mendaftar
+                        binding?.progressBar?.visibility = View.GONE
+                        showSuccessDialog()
+                    } else {
+                        /// munculkan peringatan gagal register
+                        binding?.progressBar?.visibility = View.GONE
+                        showFailureDialog("Gagal melakukan registrasi")
+                    }
                 }
-            }
+        } else {
+            val data = mapOf(
+                "uid" to uid,
+                "fullName" to fullName,
+                "username" to username,
+                "email" to email,
+                "role" to "merchant",
+            )
+            FirebaseFirestore
+                .getInstance()
+                .collection("users")
+                .document(uid)
+                .set(data)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        /// munculkan peringatan sukses mendaftar
+                        binding?.progressBar?.visibility = View.GONE
+                        showSuccessDialog()
 
-    }
-
-    fun chooseRole(view: View) {
-        if (view is RadioButton) {
-            // Is the button now checked?
-            val checked = view.isChecked
-
-            // Check which radio button was clicked
-            when (view.getId()) {
-                R.id.user ->
-                    if (checked) {
-                        role = "user"
+                        /// kalo mendaftarkan admin baru sukses, maka login kembali sebagai admin utama
+                        FirebaseAuth.getInstance().signOut()
+                        val admEmail = "admin@gmail.com"
+                        val admPassword = "admin12345"
+                        FirebaseAuth.getInstance()
+                            .signInWithEmailAndPassword(admEmail, admPassword)
+                    } else {
+                        /// munculkan peringatan gagal register
+                        binding?.progressBar?.visibility = View.GONE
+                        showFailureDialog("Gagal melakukan registrasi")
                     }
-                R.id.merchant ->
-                    if (checked) {
-                        role = "merchant"
-                    }
-            }
+                }
+
         }
     }
 
@@ -164,5 +173,9 @@ class RegisterActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    companion object {
+        const val ROLE = "role"
     }
 }
