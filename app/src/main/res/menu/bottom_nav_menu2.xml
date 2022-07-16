@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_product"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="Product" />
+
+    <item
+        android:id="@+id/navigation_report"
+        android:icon="@drawable/ic_baseline_assignment_24"
+        android:title="Laporan" />
+
+    <item
+        android:id="@+id/navigation_order"
+        android:icon="@drawable/ic_baseline_payment_24"
+        android:title="Order" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="Profile" />
+
+</menu>
