@@ -35,7 +35,14 @@ class OrderDetailActivity : AppCompatActivity() {
         val formatter = DecimalFormat("#,###")
         binding?.address?.text = "Alamat : ${model?.address}"
         binding?.phone?.text = "No.Handphone : ${model?.phone}"
-        binding?.price?.text = "Total biaya : Rp.${formatter.format(model?.totalPriceFinal)}"
+        binding?.ongkir?.text = "Biaya Ongkir : Rp.${formatter.format(model?.ongkir)}"
+        binding?.price?.text = "Total biaya : Rp.${
+            formatter.format(
+                model?.totalPriceFinal?.plus(
+                    model?.ongkir!!
+                ) ?: 0
+            )
+        }"
 
         initRecyclerView()
 
@@ -72,9 +79,13 @@ class OrderDetailActivity : AppCompatActivity() {
             .document(model?.orderId!!)
             .update("paymentStatus", "Order Dikirim")
             .addOnCompleteListener {
-                if(it.isSuccessful) {
+                if (it.isSuccessful) {
                     binding?.orderSentBtn?.visibility = View.INVISIBLE
-                    Toast.makeText(this, "Berhasil memperbarui status order menjadi ''Order Dikirim''", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Berhasil memperbarui status order menjadi ''Order Dikirim''",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
     }
@@ -88,7 +99,7 @@ class OrderDetailActivity : AppCompatActivity() {
             .document(model?.orderId!!)
             .update("paymentStatus", "Sudah Bayar")
             .addOnCompleteListener {
-                if(it.isSuccessful) {
+                if (it.isSuccessful) {
                     binding?.linearLayout?.visibility = View.INVISIBLE
                     Toast.makeText(this, "Berhasil menerima pembayaran", Toast.LENGTH_SHORT).show()
                     binding?.orderSentBtn?.visibility = View.VISIBLE
@@ -105,7 +116,7 @@ class OrderDetailActivity : AppCompatActivity() {
             .document(model?.orderId!!)
             .update("paymentStatus", "Pembayaran Ditolak")
             .addOnCompleteListener {
-                if(it.isSuccessful) {
+                if (it.isSuccessful) {
                     binding?.linearLayout?.visibility = View.INVISIBLE
                     Toast.makeText(this, "Berhasil menolak pembayaran", Toast.LENGTH_SHORT).show()
                 }
@@ -122,7 +133,7 @@ class OrderDetailActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 val role = "" + it.data!!["role"]
                 if (role == "merchant") {
-                    if(model?.paymentStatus == "Belum Bayar") {
+                    if (model?.paymentStatus == "Belum Bayar") {
                         binding?.linearLayout?.visibility = View.VISIBLE
                     } else if (model?.paymentStatus == "Sudah Bayar") {
                         binding?.orderSentBtn?.visibility = View.VISIBLE

@@ -32,7 +32,7 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
                 orderId.text = "Order ID : INV-${model.orderId}"
                 date.text = "Tanggal order : ${model.date}"
                 paymentStatus.text = "${model.paymentStatus}"
-                price.text = "Total harga : Rp.${formatter.format(model.totalPriceFinal)}"
+                price.text = "Total harga : Rp.${formatter.format(model.totalPriceFinal?.plus(model.ongkir!!) ?: 0)}"
 
                 /// misal status == belum bayar -> background warna merah
                 /// misal status == sudah bayar -> background warna biru

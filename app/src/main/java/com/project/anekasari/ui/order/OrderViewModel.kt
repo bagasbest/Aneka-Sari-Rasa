@@ -35,6 +35,7 @@ class OrderViewModel : ViewModel() {
                         model.address = document.data["address"].toString()
                         model.phone = document.data["phone"].toString()
                         model.totalPriceFinal = document.data["totalPriceFinal"] as Long
+                        model.ongkir = document.data["ongkir"] as Long
                         model.product = document.toObject(OrderModel::class.java).product
 
                         listData.add(model)
@@ -71,6 +72,7 @@ class OrderViewModel : ViewModel() {
                         model.address = document.data["address"].toString()
                         model.phone = document.data["phone"].toString()
                         model.totalPriceFinal = document.data["totalPriceFinal"] as Long
+                        model.ongkir = document.data["ongkir"] as Long
                         model.product = document.toObject(OrderModel::class.java).product
 
                         listData.add(model)
@@ -108,6 +110,7 @@ class OrderViewModel : ViewModel() {
                         model.address = document.data["address"].toString()
                         model.phone = document.data["phone"].toString()
                         model.totalPriceFinal = document.data["totalPriceFinal"] as Long
+                        model.ongkir = document.data["ongkir"] as Long
                         model.product = document.toObject(OrderModel::class.java).product
 
                         listData.add(model)
@@ -143,6 +146,7 @@ class OrderViewModel : ViewModel() {
                         model.address = document.data["address"].toString()
                         model.phone = document.data["phone"].toString()
                         model.totalPriceFinal = document.data["totalPriceFinal"] as Long
+                        model.ongkir = document.data["ongkir"] as Long
                         model.product = document.toObject(OrderModel::class.java).product
 
                         listData.add(model)

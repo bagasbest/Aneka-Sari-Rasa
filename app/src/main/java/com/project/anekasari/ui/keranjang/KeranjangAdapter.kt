@@ -32,7 +32,7 @@ class KeranjangAdapter(
 
                 textView5.text = model.name
                 qty.text = "Qty: ${model.qty}"
-                price.text = "Qty: ${formatter.format(model.price)}"
+                price.text = "Harga: ${formatter.format(model.price)}"
 
 
                 delete.setOnClickListener {

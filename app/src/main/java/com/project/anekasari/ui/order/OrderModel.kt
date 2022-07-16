@@ -17,6 +17,7 @@ data class OrderModel(
     var product : ArrayList<KeranjangModel>? = null,
     var address : String? = null,
     var phone : String? = null,
+    var ongkir : Long? = null,
     var totalPriceFinal : Long? = 0L,
 
 ) : Parcelable

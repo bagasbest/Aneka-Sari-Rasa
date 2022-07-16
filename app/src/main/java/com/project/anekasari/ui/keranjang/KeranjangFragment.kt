@@ -7,15 +7,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +24,7 @@ import com.project.anekasari.databinding.FragmentKeranjangBinding
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class KeranjangFragment : Fragment() {
 
@@ -39,6 +36,7 @@ class KeranjangFragment : Fragment() {
     private var listOfCheckout = ArrayList<KeranjangModel>()
     private var totalPriceCheckout = 0L
     private var isWaiting = false
+    private var ongkirChoice = 0
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -76,8 +74,12 @@ class KeranjangFragment : Fragment() {
         val addressEt: TextInputEditText
         val phoneEt: TextInputEditText
         val totalPrice: TextView
+        val productPrice: TextView
+        val sendPrice: TextView
         val confirmBtn: Button
         val pb: ProgressBar
+        val innerProvenceRb : Button
+        val outerProvenceRb : Button
         val dialog = Dialog(requireContext())
         var totalPriceFinal = 0L
         dialog.setContentView(R.layout.popup_cart)
@@ -85,16 +87,36 @@ class KeranjangFragment : Fragment() {
         addressEt = dialog.findViewById(R.id.address)
         phoneEt = dialog.findViewById(R.id.phone)
         totalPrice = dialog.findViewById(R.id.totalPrice)
+        productPrice = dialog.findViewById(R.id.productPrice)
+        sendPrice = dialog.findViewById(R.id.sendPrice)
+        innerProvenceRb = dialog.findViewById(R.id.innerProvince)
+        outerProvenceRb = dialog.findViewById(R.id.outerProvince)
         confirmBtn = dialog.findViewById(R.id.confirmBtn)
         pb = dialog.findViewById(R.id.progressBar)
+        val formatter = DecimalFormat("#,###")
 
+        innerProvenceRb.setOnClickListener {
+            innerProvenceRb.backgroundTintList = ContextCompat.getColorStateList(it.context, android.R.color.holo_green_dark)
+            outerProvenceRb.backgroundTintList = ContextCompat.getColorStateList(it.context, R.color.red)
+
+            ongkirChoice = 20000
+            sendPrice.text = "Biaya Ongkir: Rp.${formatter.format(ongkirChoice)}"
+            totalPrice.text = "Total Biaya: Rp.${formatter.format(totalPriceFinal + ongkirChoice)}"
+        }
+
+        outerProvenceRb.setOnClickListener {
+            outerProvenceRb.backgroundTintList = ContextCompat.getColorStateList(it.context, android.R.color.holo_green_dark)
+            innerProvenceRb.backgroundTintList = ContextCompat.getColorStateList(it.context, R.color.red)
+            ongkirChoice = 50000
+            sendPrice.text = "Biaya Ongkir: Rp.${formatter.format(ongkirChoice)}"
+            totalPrice.text = "Total Biaya: Rp.${formatter.format(totalPriceFinal + ongkirChoice)}"
+        }
 
         for (index in listOfCart.indices) {
             totalPriceFinal += listOfCart[index].price!!
         }
 
-        val formatter = DecimalFormat("#,###")
-        totalPrice.text = "Total biaya: Rp.${formatter.format(totalPriceFinal)}"
+        productPrice.text = "Total biaya: Rp.${formatter.format(totalPriceFinal)}"
 
         confirmBtn?.setOnClickListener {
             val address = addressEt.text.toString().trim()
@@ -109,7 +131,15 @@ class KeranjangFragment : Fragment() {
                     "Maaf, No.Handphone tidak boleh kosong!",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else {
+            }
+            else if (ongkirChoice == 0) {
+                Toast.makeText(
+                    activity,
+                    "Maaf, Silahkan pilih ongkos kirim!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else {
                 pb.visibility = View.VISIBLE
 
                 for (index in listOfCart.indices) {
@@ -186,6 +216,7 @@ class KeranjangFragment : Fragment() {
             "date" to formattedDate,
             "paymentStatus" to "Belum Bayar",
             "paymentProof" to "",
+            "ongkir" to ongkirChoice.toLong(),
             "product" to listOfCheckout,
             "address" to address,
             "phone" to phone,
@@ -230,6 +261,7 @@ class KeranjangFragment : Fragment() {
             "paymentStatus" to "Belum Bayar",
             "paymentProof" to "",
             "product" to listOfCheckout,
+            "ongkir" to ongkirChoice.toLong(),
             "address" to address,
             "phone" to phone,
             "totalPriceFinal" to totalPriceCheckout,
@@ -266,6 +298,7 @@ class KeranjangFragment : Fragment() {
             "merchantName" to listOfCart[index-1].merchantName,
             "date" to formattedDate,
             "paymentStatus" to "Belum Bayar",
+            "ongkir" to ongkirChoice.toLong(),
             "paymentProof" to "",
             "product" to listOfCheckout,
             "address" to address,

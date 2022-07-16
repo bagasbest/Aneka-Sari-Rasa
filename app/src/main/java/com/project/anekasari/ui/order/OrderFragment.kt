@@ -97,8 +97,6 @@ class OrderFragment : Fragment() {
         val viewModel = ViewModelProvider(this)[OrderViewModel::class.java]
         binding.progressBar.visibility = View.VISIBLE
 
-        Log.e("sasa", paymentStatus)
-
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
         if(role == "user") {
             if(paymentStatus != "all") {
