@@ -210,6 +210,7 @@ class KeranjangFragment : Fragment() {
 
         val data = mapOf(
             "orderId" to orderId,
+            "dateInMillis" to orderId.toLong(),
             "merchantId" to listOfCart[index].merchantId,
             "userId" to listOfCart[0].userId,
             "merchantName" to listOfCart[index].merchantName,
@@ -254,6 +255,7 @@ class KeranjangFragment : Fragment() {
 
         val data = mapOf(
             "orderId" to orderId,
+            "dateInMillis" to orderId.toLong(),
             "merchantId" to listOfCart[index-1].merchantId,
             "userId" to listOfCart[0].userId,
             "merchantName" to listOfCart[index-1].merchantName,
@@ -293,6 +295,7 @@ class KeranjangFragment : Fragment() {
 
         val data = mapOf(
             "orderId" to orderId,
+            "dateInMillis" to orderId.toLong(),
             "merchantId" to listOfCart[index-1].merchantId,
             "userId" to listOfCart[0].userId,
             "merchantName" to listOfCart[index-1].merchantName,

@@ -7,17 +7,18 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class OrderModel(
 
-    var orderId : String? = null,
-    var merchantId : String? = null,
-    var userId : String? = null,
-    var merchantName : String? = null,
-    var date : String? = null,
-    var paymentStatus : String? = null,
-    var paymentProof : String? = null,
-    var product : ArrayList<KeranjangModel>? = null,
-    var address : String? = null,
-    var phone : String? = null,
-    var ongkir : Long? = null,
-    var totalPriceFinal : Long? = 0L,
+    var orderId: String? = null,
+    var dateInMillis: Long? = 0L,
+    var merchantId: String? = null,
+    var userId: String? = null,
+    var merchantName: String? = null,
+    var date: String? = null,
+    var paymentStatus: String? = null,
+    var paymentProof: String? = null,
+    var product: ArrayList<KeranjangModel>? = null,
+    var address: String? = null,
+    var phone: String? = null,
+    var ongkir: Long? = null,
+    var totalPriceFinal: Long? = 0L,
 
-) : Parcelable
+    ) : Parcelable
