@@ -1,6 +1,7 @@
 package com.project.anekasari.ui.order
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,15 @@ class OrderFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         checkRole()
+        showDropdownFilterPaymentStatus()
+        paymentStatus = binding.paymentStatus.text.toString()
+        if(paymentStatus == "" || paymentStatus == "Semua") {
+            initRecyclerView()
+            initViewModel("all")
+        } else {
+            initRecyclerView()
+            initViewModel(paymentStatus!!)
+        }
     }
 
     private fun checkRole() {
@@ -39,8 +49,6 @@ class OrderFragment : Fragment() {
             .get()
             .addOnSuccessListener {
                 role = "" + it.data!!["role"]
-                initRecyclerView()
-                initViewModel()
             }
     }
 
@@ -68,8 +76,14 @@ class OrderFragment : Fragment() {
         binding.paymentStatus.setAdapter(adapter)
         binding.paymentStatus.setOnItemClickListener { _, _, _, _ ->
             paymentStatus = binding.paymentStatus.text.toString()
-            initRecyclerView()
-            initViewModel()
+            if(paymentStatus == "null" || paymentStatus == "Semua") {
+                initRecyclerView()
+                initViewModel("all")
+            } else {
+                initRecyclerView()
+                initViewModel(paymentStatus!!)
+            }
+
         }
     }
 
@@ -79,22 +93,24 @@ class OrderFragment : Fragment() {
         binding.orderRv.adapter = adapter
     }
 
-    private fun initViewModel() {
+    private fun initViewModel(paymentStatus: String) {
         val viewModel = ViewModelProvider(this)[OrderViewModel::class.java]
         binding.progressBar.visibility = View.VISIBLE
 
+        Log.e("sasa", paymentStatus)
+
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
         if(role == "user") {
-            if(paymentStatus != null) {
-                viewModel.setListOrderByIdAndPaymentStatus(uid, paymentStatus!!)
+            if(paymentStatus != "all") {
+                viewModel.setListOrderByIdAndPaymentStatus(uid, paymentStatus)
             } else {
                 viewModel.setListOrderById(uid)
             }
         } else {
-            if(paymentStatus != null) {
-                viewModel.setListOrderByMerchantIdAndPaymentStatus(uid, paymentStatus!!)
+            if(paymentStatus != "all") {
+                viewModel.setListOrderByStatus(paymentStatus)
             } else {
-                viewModel.setListOrderByMerchantId(uid)
+                viewModel.setListOrderByAll()
             }
         }
 

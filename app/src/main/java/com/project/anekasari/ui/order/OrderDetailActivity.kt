@@ -58,6 +58,10 @@ class OrderDetailActivity : AppCompatActivity() {
         binding?.orderSentBtn?.setOnClickListener {
             updatePaymentStatus()
         }
+
+        binding?.backButton?.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     /// ini method untuk mengubah paymentStatus menjadi "Order Dikirim"

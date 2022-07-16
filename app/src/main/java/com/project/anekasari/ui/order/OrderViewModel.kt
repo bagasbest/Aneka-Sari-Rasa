@@ -49,12 +49,12 @@ class OrderViewModel : ViewModel() {
         }
     }
 
-    fun setListOrderByMerchantId(merchantId : String) {
+    fun setListOrderByStatus(paymentStatus : String) {
         listData.clear()
 
         try {
             FirebaseFirestore.getInstance().collection("order")
-                .whereEqualTo("merchantId", merchantId)
+                .whereEqualTo("paymentStatus", paymentStatus)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -122,13 +122,11 @@ class OrderViewModel : ViewModel() {
         }
     }
 
-    fun setListOrderByMerchantIdAndPaymentStatus(uid: String, paymentStatus: String) {
+    fun setListOrderByAll() {
         listData.clear()
 
         try {
             FirebaseFirestore.getInstance().collection("order")
-                .whereEqualTo("merchantId", uid)
-                .whereEqualTo("paymentStatus", paymentStatus)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {

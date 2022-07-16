@@ -36,6 +36,7 @@ class ProductFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         getRole()
+        showDropdownCategory()
         when (filter) {
             null -> {
                 initRecyclerView()
@@ -84,7 +85,7 @@ class ProductFragment : Fragment() {
         val viewModel = ViewModelProvider(this)[ProductViewModel::class.java]
         binding.progressBar.visibility = View.VISIBLE
 
-        if(category == "all" && searchProduct == "all") {
+        if((category == "all" || category == "Semua") && searchProduct == "all") {
             viewModel.setListProduct()
         } else if (searchProduct != "all") {
             viewModel.setListProductBySearch(searchProduct)
@@ -107,8 +108,6 @@ class ProductFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
         _binding = FragmentProductBinding.inflate(inflater, container, false)
 
         showDropdownCategory()
