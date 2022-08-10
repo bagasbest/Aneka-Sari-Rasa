@@ -30,14 +30,6 @@ class OrderFragment : Fragment() {
         super.onResume()
         checkRole()
         showDropdownFilterPaymentStatus()
-        paymentStatus = binding.paymentStatus.text.toString()
-        if(paymentStatus == "" || paymentStatus == "Semua") {
-            initRecyclerView()
-            initViewModel("all")
-        } else {
-            initRecyclerView()
-            initViewModel(paymentStatus!!)
-        }
     }
 
     private fun checkRole() {
@@ -49,6 +41,14 @@ class OrderFragment : Fragment() {
             .get()
             .addOnSuccessListener {
                 role = "" + it.data!!["role"]
+                paymentStatus = binding.paymentStatus.text.toString()
+                if(paymentStatus == "" || paymentStatus == "Semua") {
+                    initRecyclerView()
+                    initViewModel("all")
+                } else {
+                    initRecyclerView()
+                    initViewModel(paymentStatus!!)
+                }
             }
     }
 
@@ -98,6 +98,9 @@ class OrderFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
 
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        Log.e("dasa", uid)
+        Log.e("dasa", paymentStatus)
+        Log.e("dasa", role.toString())
         if(role == "user") {
             if(paymentStatus != "all") {
                 viewModel.setListOrderByIdAndPaymentStatus(uid, paymentStatus)

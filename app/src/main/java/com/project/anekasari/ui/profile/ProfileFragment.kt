@@ -93,6 +93,10 @@ class ProfileFragment : Fragment() {
     }
 
     private fun getUserData() {
+        val mProgressDialog = ProgressDialog(activity)
+        mProgressDialog.setMessage("Mohon tunggu hingga proses selesai...")
+        mProgressDialog.setCanceledOnTouchOutside(false)
+        mProgressDialog.show()
         FirebaseFirestore
             .getInstance()
             .collection("users")
@@ -116,6 +120,7 @@ class ProfileFragment : Fragment() {
                 binding.username.setText(username)
                 binding.email.setText(email)
                 binding.role.setText(role)
+                mProgressDialog.dismiss()
             }
     }
 

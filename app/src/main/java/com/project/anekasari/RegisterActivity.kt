@@ -16,11 +16,14 @@ class RegisterActivity : AppCompatActivity() {
     /// var itu berarti variabel tersebut dapat di ubah atau di isi dengan value lain
     /// val itu berarti variabel tidak bisa di ubah
     private var binding: ActivityRegisterBinding? = null
+    private var option = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        option = intent.getStringExtra(ROLE).toString()
 
         /// klik register button, maka proses registrasi data user akan disimpan kedalam database
         /// user bisa melakukan login setelah register
@@ -82,7 +85,7 @@ class RegisterActivity : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
 
         /// kumpulan informasi dari user yang diisikan di kolom registrasi
-        if (intent.getStringExtra(ROLE) == "user") {
+        if (option == "user") {
             val data = mapOf(
                 "uid" to uid,
                 "fullName" to fullName,
@@ -122,16 +125,19 @@ class RegisterActivity : AppCompatActivity() {
                 .set(data)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        /// munculkan peringatan sukses mendaftar
-                        binding?.progressBar?.visibility = View.GONE
-                        showSuccessDialog()
-
                         /// kalo mendaftarkan admin baru sukses, maka login kembali sebagai admin utama
                         FirebaseAuth.getInstance().signOut()
                         val admEmail = "admin@gmail.com"
                         val admPassword = "admin12345"
                         FirebaseAuth.getInstance()
                             .signInWithEmailAndPassword(admEmail, admPassword)
+                            .addOnCompleteListener { task ->
+                                if(task.isSuccessful) {
+                                    /// munculkan peringatan sukses mendaftar
+                                    binding?.progressBar?.visibility = View.GONE
+                                    showSuccessDialog()
+                                }
+                            }
                     } else {
                         /// munculkan peringatan gagal register
                         binding?.progressBar?.visibility = View.GONE
