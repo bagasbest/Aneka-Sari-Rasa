@@ -19,6 +19,7 @@ class OrderDetailActivity : AppCompatActivity() {
     var model: OrderModel? = null
     var listOfProduct = ArrayList<KeranjangModel>()
     var adapter: OrderDetailAdapter? = null
+    var name: String? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +34,7 @@ class OrderDetailActivity : AppCompatActivity() {
 
 
         val formatter = DecimalFormat("#,###")
+        binding?.name?.text = "Nama : $name"
         binding?.address?.text = "Alamat : ${model?.address}"
         binding?.phone?.text = "No.Handphone : ${model?.phone}"
         binding?.ongkir?.text = "Biaya Ongkir : Rp.${formatter.format(model?.ongkir)}"
@@ -132,6 +134,7 @@ class OrderDetailActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener {
                 val role = "" + it.data!!["role"]
+                name = "" + it.data!!["fullName"]
                 if (role == "merchant") {
                     if (model?.paymentStatus == "Belum Bayar") {
                         binding?.linearLayout?.visibility = View.VISIBLE
