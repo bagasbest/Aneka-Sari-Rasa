@@ -33,6 +33,7 @@ class OrderViewModel : ViewModel() {
                         model.date = document.data["date"].toString()
                         model.paymentStatus = document.data["paymentStatus"].toString()
                         model.paymentProof = document.data["paymentProof"].toString()
+                        model.resi = document.data["resi"].toString()
                         model.address = document.data["address"].toString()
                         model.phone = document.data["phone"].toString()
                         model.totalPriceFinal = document.data["totalPriceFinal"] as Long
@@ -69,6 +70,7 @@ class OrderViewModel : ViewModel() {
                         model.userId = document.data["userId"].toString()
                         model.merchantId = document.data["merchantId"].toString()
                         model.date = document.data["date"].toString()
+                        model.resi = document.data["resi"].toString()
                         model.paymentStatus = document.data["paymentStatus"].toString()
                         model.paymentProof = document.data["paymentProof"].toString()
                         model.address = document.data["address"].toString()
@@ -106,6 +108,7 @@ class OrderViewModel : ViewModel() {
                         model.dateInMillis = document.data["dateInMillis"] as Long
                         model.merchantName = document.data["merchantName"].toString()
                         model.userId = document.data["userId"].toString()
+                        model.resi = document.data["resi"].toString()
                         model.merchantId = document.data["merchantId"].toString()
                         model.date = document.data["date"].toString()
                         model.paymentStatus = document.data["paymentStatus"].toString()
@@ -143,6 +146,7 @@ class OrderViewModel : ViewModel() {
                         model.dateInMillis = document.data["dateInMillis"] as Long
                         model.merchantName = document.data["merchantName"].toString()
                         model.userId = document.data["userId"].toString()
+                        model.resi = document.data["resi"].toString()
                         model.merchantId = document.data["merchantId"].toString()
                         model.date = document.data["date"].toString()
                         model.paymentStatus = document.data["paymentStatus"].toString()
@@ -185,6 +189,7 @@ class OrderViewModel : ViewModel() {
                         model.userId = document.data["userId"].toString()
                         model.merchantId = document.data["merchantId"].toString()
                         model.date = document.data["date"].toString()
+                        model.resi = document.data["resi"].toString()
                         model.paymentStatus = document.data["paymentStatus"].toString()
                         model.paymentProof = document.data["paymentProof"].toString()
                         model.address = document.data["address"].toString()

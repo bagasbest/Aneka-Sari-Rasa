@@ -20,5 +20,5 @@ data class OrderModel(
     var phone: String? = null,
     var ongkir: Long? = null,
     var totalPriceFinal: Long? = 0L,
-
+    var resi: String? = null
     ) : Parcelable
